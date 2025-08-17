@@ -78,9 +78,9 @@ const Course = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Курс Go для начинающих</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">Годовой курс Go для начинающих</h1>
         <p className="text-gray-600">
-          Изучите основы программирования на Go от простых концепций до создания проектов
+          Полный курс изучения Go от основ до создания проектов за учебный год
         </p>
       </div>
 
@@ -88,7 +88,7 @@ const Course = () => {
         {/* Modules List */}
         <div className="lg:col-span-2">
           <div className="space-y-6">
-            {courseModules.map((module) => (
+            {fullYearCourse.map((module, index) => (
               <Card 
                 key={module.id} 
                 className={`transition-all duration-300 hover:shadow-lg cursor-pointer border-2 ${
