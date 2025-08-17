@@ -13,6 +13,7 @@ import {
   Star
 } from "lucide-react";
 import { courseModules } from "../data/mock";
+import { fullYearCourse } from "../data/fullYearCourse";
 import { useToast } from "../hooks/use-toast";
 
 const Course = () => {
