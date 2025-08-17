@@ -187,16 +187,8 @@ const Course = () => {
                           onClick={() => handleLessonClick(lesson, selectedModule.id)}
                         >
                           <div className="flex items-center space-x-3">
-                            <div className={`p-1.5 rounded ${
-                              lesson.completed 
-                                ? 'bg-green-500 text-white' 
-                                : 'bg-gray-300 text-gray-600'
-                            }`}>
-                              {lesson.completed ? (
-                                <CheckCircle className="w-3 h-3" />
-                              ) : (
-                                getLessonIcon(lesson.type)
-                              )}
+                            <div className="p-1.5 rounded bg-gray-300 text-gray-600">
+                              {getLessonIcon(lesson.type)}
                             </div>
                             <div>
                               <div className="text-sm font-medium text-gray-800">
@@ -204,7 +196,7 @@ const Course = () => {
                               </div>
                               <div className="flex items-center space-x-2 text-xs text-gray-500">
                                 <Clock className="w-3 h-3" />
-                                <span>{lesson.duration}</span>
+                                <span>{lesson.duration} мин</span>
                                 <Badge 
                                   variant="secondary" 
                                   className={`text-xs ${getTypeColor(lesson.type)}`}
