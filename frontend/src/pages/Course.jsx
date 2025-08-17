@@ -18,6 +18,7 @@ import { useToast } from "../hooks/use-toast";
 
 const Course = () => {
   const [selectedModule, setSelectedModule] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(fullYearCourse[0]); // Show full year course
   const { toast } = useToast();
 
   const handleLessonClick = (lesson, moduleId) => {
