@@ -21,6 +21,8 @@ const Navigation = () => {
     { path: "/practice", label: "Практика", icon: Code },
     { path: "/progress", label: "Прогресс", icon: TrendingUp },
     { path: "/classroom", label: "Класс", icon: Users },
+    { path: "/admin", label: "Админ", icon: Settings },
+    { path: "/classroom-management", label: "Управление", icon: UserCog },
   ];
 
   return (
