@@ -22,6 +22,8 @@ function App() {
           <Route path="/practice" element={<Practice />} />
           <Route path="/progress" element={<Progress />} />
           <Route path="/classroom" element={<Classroom />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/classroom-management" element={<ClassroomManagement />} />
         </Routes>
         <Toaster />
       </BrowserRouter>
