@@ -213,16 +213,13 @@ const Course = () => {
                     <Button 
                       className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                       onClick={() => {
-                        const nextLesson = selectedModule.lessons.find(l => !l.completed);
-                        if (nextLesson) {
-                          handleLessonClick(nextLesson, selectedModule.id);
-                        }
+                        toast({
+                          title: "Урок начат",
+                          description: `Started lesson: ${selectedModule.lessons[0]?.title}`
+                        });
                       }}
                     >
-                      {selectedModule.lessons.every(l => l.completed) 
-                        ? 'Модуль завершен' 
-                        : 'Продолжить обучение'
-                      }
+                      Начать изучение
                     </Button>
                   </div>
                 </CardContent>
