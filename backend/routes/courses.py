@@ -1,7 +1,6 @@
 # Course management routes
 from fastapi import APIRouter, Depends, HTTPException, status
-from auth import get_current_user_with_db, require_admin
-from database import DatabaseService
+from dependencies import get_current_user, require_admin, get_db_service
 from models import *
 from typing import List, Optional
 
@@ -11,7 +10,7 @@ router = APIRouter(prefix="/courses", tags=["courses"])
 async def get_courses(
     skip: int = 0,
     limit: int = 100,
-    db_service: DatabaseService = Depends(lambda: DatabaseService(None))
+    db_service = Depends(get_db_service)
 ):
     courses = await db_service.get_courses(skip=skip, limit=limit)
     return courses
@@ -19,7 +18,7 @@ async def get_courses(
 @router.get("/{course_id}", response_model=CourseWithLessons)
 async def get_course(
     course_id: str,
-    db_service: DatabaseService = Depends(lambda: DatabaseService(None))
+    db_service = Depends(get_db_service)
 ):
     course = await db_service.get_course_by_id(course_id)
     if not course:
@@ -39,7 +38,7 @@ async def get_course(
 @router.get("/{course_id}/lessons", response_model=List[Lesson])
 async def get_course_lessons(
     course_id: str,
-    db_service: DatabaseService = Depends(lambda: DatabaseService(None))
+    db_service = Depends(get_db_service)
 ):
     course = await db_service.get_course_by_id(course_id)
     if not course:
@@ -56,7 +55,7 @@ async def get_course_lessons(
 async def create_course(
     course_create: CourseCreate,
     current_user: User = Depends(require_admin),
-    db_service: DatabaseService = Depends(lambda: DatabaseService(None))
+    db_service = Depends(get_db_service)
 ):
     course = Course(
         **course_create.dict(),
@@ -71,7 +70,7 @@ async def update_course(
     course_id: str,
     course_update: CourseUpdate,
     current_user: User = Depends(require_admin),
-    db_service: DatabaseService = Depends(lambda: DatabaseService(None))
+    db_service = Depends(get_db_service)
 ):
     course = await db_service.get_course_by_id(course_id)
     if not course:
@@ -94,7 +93,7 @@ async def update_course(
 async def delete_course(
     course_id: str,
     current_user: User = Depends(require_admin),
-    db_service: DatabaseService = Depends(lambda: DatabaseService(None))
+    db_service = Depends(get_db_service)
 ):
     course = await db_service.get_course_by_id(course_id)
     if not course:
@@ -117,7 +116,7 @@ async def reorder_course_lessons(
     course_id: str,
     lesson_ids: List[str],
     current_user: User = Depends(require_admin),
-    db_service: DatabaseService = Depends(lambda: DatabaseService(None))
+    db_service = Depends(get_db_service)
 ):
     course = await db_service.get_course_by_id(course_id)
     if not course:
