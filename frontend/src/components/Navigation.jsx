@@ -7,7 +7,9 @@ import {
   TrendingUp, 
   Users, 
   Home as HomeIcon,
-  Trophy
+  Trophy,
+  Settings,
+  UserCog
 } from "lucide-react";
 
 const Navigation = () => {
