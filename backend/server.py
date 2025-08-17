@@ -36,9 +36,21 @@ api_router = APIRouter(prefix="/api")
 auth_service = AuthService(db)
 db_service = DatabaseService(db)
 
+# Startup event to seed database
+@app.on_event("startup")
+async def startup_event():
+    await seed_initial_data(db_service, auth_service)
+
 # Dependency to get database
 async def get_database():
     return db
+
+# Dependency injection for services
+async def get_auth_service():
+    return AuthService(db)
+
+async def get_db_service():
+    return DatabaseService(db)
 
 # Override the get_current_user dependency to inject database
 async def get_current_user_with_db(
