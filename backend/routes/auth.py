@@ -1,10 +1,47 @@
 # Authentication routes
 from fastapi import APIRouter, Depends, HTTPException, status
-from auth import AuthService, get_current_user_with_db
+from motor.motor_asyncio import AsyncIOMotorDatabase
+from auth import AuthService
 from database import DatabaseService
 from models import UserCreate, UserLogin, User, UserResponse, Token, UserRole
 from datetime import timedelta
 from typing import List
+
+# Dependency to get database
+async def get_database():
+    from server import db
+    return db
+
+# Dependency injection for services  
+async def get_auth_service(database = Depends(get_database)):
+    return AuthService(database)
+
+async def get_db_service(database = Depends(get_database)):
+    return DatabaseService(database)
+
+# Dependency to get current user
+async def get_current_user_with_db(
+    auth_service: AuthService = Depends(get_auth_service)
+):
+    from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+    from fastapi import Depends
+    
+    security = HTTPBearer()
+    
+    async def _get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+        credentials_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        
+        user = await auth_service.verify_token(credentials.credentials)
+        if user is None:
+            raise credentials_exception
+        
+        return user
+    
+    return await _get_current_user()
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
