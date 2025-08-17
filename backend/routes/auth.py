@@ -73,7 +73,7 @@ async def register(
 @router.post("/login", response_model=Token)
 async def login(
     user_login: UserLogin,
-    auth_service: AuthService = Depends(lambda: AuthService(None))
+    auth_service: AuthService = Depends(get_auth_service)
 ):
     user = await auth_service.authenticate_user(user_login.email, user_login.password)
     if not user:
