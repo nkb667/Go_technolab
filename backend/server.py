@@ -80,6 +80,18 @@ async def root():
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.utcnow()}
 
+# Include all route modules
+api_router.include_router(auth.router)
+api_router.include_router(courses.router) 
+api_router.include_router(lessons.router)
+api_router.include_router(classrooms.router)
+api_router.include_router(progress.router)
+api_router.include_router(achievements.router)
+api_router.include_router(analytics.router)
+
+# Include the main router in the app
+app.include_router(api_router)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
