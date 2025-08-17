@@ -94,25 +94,15 @@ const Course = () => {
                 className={`transition-all duration-300 hover:shadow-lg cursor-pointer border-2 ${
                   selectedModule?.id === module.id 
                     ? 'border-blue-500 shadow-lg' 
-                    : module.unlocked 
-                      ? 'border-gray-200 hover:border-blue-300' 
-                      : 'border-gray-100 opacity-60'
+                    : 'border-gray-200 hover:border-blue-300'
                 }`}
-                onClick={() => module.unlocked && setSelectedModule(module)}
+                onClick={() => setSelectedModule(module)}
               >
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className={`p-2 rounded-lg ${
-                        module.unlocked 
-                          ? 'bg-gradient-to-r from-blue-500 to-indigo-500' 
-                          : 'bg-gray-400'
-                      }`}>
-                        {module.unlocked ? (
-                          <BookOpen className="w-5 h-5 text-white" />
-                        ) : (
-                          <Lock className="w-5 h-5 text-white" />
-                        )}
+                      <div className={`p-2 rounded-lg bg-gradient-to-r ${module.color}`}>
+                        <BookOpen className="w-5 h-5 text-white" />
                       </div>
                       <div>
                         <CardTitle className="text-lg">{module.title}</CardTitle>
@@ -121,7 +111,7 @@ const Course = () => {
                     </div>
                     <div className="text-right">
                       <div className="text-sm font-medium text-gray-600">
-                        {module.progress}%
+                        {module.duration}
                       </div>
                       <div className="text-xs text-gray-500">
                         {module.lessons.length} уроков
@@ -130,30 +120,33 @@ const Course = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <Progress value={module.progress} className="mb-4" />
+                  {/* Module progress would be calculated from backend */}
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between text-sm mb-1">
+                      <span>Прогресс</span>
+                      <span>{index === 0 ? '67%' : '0%'}</span>
+                    </div>
+                    <Progress value={index === 0 ? 67 : 0} />
+                  </div>
                   <div className="flex items-center justify-between">
                     <div className="flex space-x-2">
-                      {module.lessons.slice(0, 3).map((lesson, index) => (
+                      {module.lessons.slice(0, 4).map((lesson, lessonIndex) => (
                         <div
-                          key={lesson.id}
+                          key={lessonIndex}
                           className={`w-3 h-3 rounded-full ${
-                            lesson.completed 
-                              ? 'bg-green-500' 
-                              : 'bg-gray-300'
+                            index === 0 && lessonIndex < 2 ? 'bg-green-500' : 'bg-gray-300'
                           }`}
                         />
                       ))}
-                      {module.lessons.length > 3 && (
+                      {module.lessons.length > 4 && (
                         <div className="text-xs text-gray-500 flex items-center">
-                          +{module.lessons.length - 3}
+                          +{module.lessons.length - 4}
                         </div>
                       )}
                     </div>
-                    {!module.unlocked && (
-                      <Badge variant="secondary" className="bg-gray-100 text-gray-600">
-                        Заблокирован
-                      </Badge>
-                    )}
+                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                      {index + 1} из 6
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
