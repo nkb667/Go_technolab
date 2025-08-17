@@ -48,8 +48,8 @@ router = APIRouter(prefix="/auth", tags=["authentication"])
 @router.post("/register", response_model=UserResponse)
 async def register(
     user_create: UserCreate,
-    auth_service: AuthService = Depends(lambda: AuthService(None)),
-    db_service: DatabaseService = Depends(lambda: DatabaseService(None))
+    auth_service: AuthService = Depends(get_auth_service),
+    db_service: DatabaseService = Depends(get_db_service)
 ):
     # Check if user already exists
     existing_user = await db_service.get_user_by_email(user_create.email)
