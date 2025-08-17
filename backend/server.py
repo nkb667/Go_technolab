@@ -13,6 +13,10 @@ from datetime import datetime, timedelta
 from models import *
 from auth import AuthService, get_current_user, require_admin, require_teacher_or_admin
 from database import DatabaseService
+from data_seeder import seed_initial_data
+
+# Import route modules
+from routes import auth, courses, lessons, classrooms, progress, achievements, analytics
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
