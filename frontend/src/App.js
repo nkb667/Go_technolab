@@ -7,6 +7,8 @@ import Course from "./pages/Course";
 import Practice from "./pages/Practice";
 import Progress from "./pages/Progress";
 import Classroom from "./pages/Classroom";
+import Admin from "./pages/Admin";
+import ClassroomManagement from "./pages/ClassroomManagement";
 import { Toaster } from "./components/ui/toaster";
 
 function App() {
